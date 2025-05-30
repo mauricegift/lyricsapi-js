@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.set('json spaces', 2);
 
 // Lyrics API endpoint
 app.get('/api/lyrics', async (req, res) => {
@@ -96,11 +97,15 @@ app.get('/api/lyrics', async (req, res) => {
     const cleanedLyrics = lyricsText.replace(/^[\s\S]*?(\[Verse 1\])/, '$1').trim();
 
     return res.json({
+      status: 200,
+      success: true,
+      result: {
       title: songTitle,
       artist: artistName,
       link: songUrl,
       image: imageUrl,
       lyrics: cleanedLyrics
+      }
     });
 
   } catch (error) {
@@ -115,9 +120,10 @@ app.get('/api/lyrics', async (req, res) => {
 // Root endpoint
 app.get('/', (req, res) => {
   res.send(`
-    <h1>Genius Lyrics API</h1>
+    <h1>Genius.com Lyrics API</h1>
     <p>Use the <code>/api/lyrics?q=SONG_NAME</code> endpoint to search for lyrics</p>
-    <p>Example: <a href="/api/lyrics?q=Dynasty MIIA">/api/lyrics?q=Dynasty MIIA</a></p>
+    <p>Example: <a href="/api/lyrics?q=Dynasty MIIA">Tap Here</a></p>
+    <p>Made By: Gifted Tech</p>
   `);
 });
 
